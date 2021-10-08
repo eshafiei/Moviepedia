@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Moviepedia.Data.Entities;
+using Moviepedia.Services.Movies;
 
 namespace Moviepedia.Web
 {
@@ -20,7 +24,23 @@ namespace Moviepedia.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddCors(options => {
+                options.AddPolicy("corspolicy", builder => builder
+                 .AllowAnyOrigin()
+                 .SetIsOriginAllowed((host) => true)
+                 .AllowAnyMethod()
+                 .AllowAnyHeader());
+            });
+
+            services.AddDbContext<TitlesContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:moviepediaDb"]));
+
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
+            services.Add(new ServiceDescriptor(typeof(IMoviesService), typeof(MoviesService), ServiceLifetime.Scoped));
+            
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -53,10 +73,10 @@ namespace Moviepedia.Web
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
+
+            app.UseCors("corspolicy");
 
             app.UseSpa(spa =>
             {
@@ -70,6 +90,8 @@ namespace Moviepedia.Web
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            
         }
     }
 }
