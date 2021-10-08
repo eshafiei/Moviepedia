@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31313.79
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moviepedia.Web", "Moviepedia.Web\Moviepedia.Web.csproj", "{EB0EBCE8-CC9F-4EED-98FE-F1EBBE9C3340}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moviepedia.Web", "Moviepedia.Web\Moviepedia.Web.csproj", "{EB0EBCE8-CC9F-4EED-98FE-F1EBBE9C3340}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moviepedia.Data", "Moviepedia.Data\Moviepedia.Data.csproj", "{98CFFCF4-B506-4AC7-9CB7-0AC1A75C0111}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moviepedia.Data", "Moviepedia.Data\Moviepedia.Data.csproj", "{98CFFCF4-B506-4AC7-9CB7-0AC1A75C0111}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moviepedia.Services", "Moviepedia.Services\Moviepedia.Services.csproj", "{0E19EA5E-D041-4949-9AA1-61AC767039CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{98CFFCF4-B506-4AC7-9CB7-0AC1A75C0111}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98CFFCF4-B506-4AC7-9CB7-0AC1A75C0111}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98CFFCF4-B506-4AC7-9CB7-0AC1A75C0111}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E19EA5E-D041-4949-9AA1-61AC767039CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E19EA5E-D041-4949-9AA1-61AC767039CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E19EA5E-D041-4949-9AA1-61AC767039CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E19EA5E-D041-4949-9AA1-61AC767039CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

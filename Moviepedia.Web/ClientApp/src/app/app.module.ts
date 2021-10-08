@@ -9,14 +9,21 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatPaginatorModule, MatProgressSpinnerModule, MatTableModule } from '@angular/material';
+import { TitlesManagementComponent } from './movies/containers/titles-management.component';
+import { httpInterceptorProviders } from './common/interceptors';
+import { LoaderComponent } from './common/components/loader/loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
+    LoaderComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent
+    FetchDataComponent,
+    TitlesManagementComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -24,11 +31,15 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
+      { path: 'movies', component: TitlesManagementComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-    ])
+    ]),
+    BrowserAnimationsModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
