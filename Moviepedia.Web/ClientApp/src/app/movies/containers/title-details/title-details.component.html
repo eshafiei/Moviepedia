@@ -4,10 +4,10 @@
       <div class="card">
         <div class="card-header">
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-5">
               <h3>{{ titleInfo.titleName }}</h3><h6>({{ titleInfo.releaseYear }})</h6>
             </div>
-            <div class="col-md-8 align-self-end text-right">
+            <div class="col-md-7 align-self-end text-right">
               <h6><span class="badge badge-pill badge-info ml-2 genre-badge" *ngFor="let item of titleInfo.titleGenres">{{ item.genre.name }}</span></h6>
             </div>
           </div>
@@ -39,7 +39,7 @@
                   <mat-divider class="mt-4"></mat-divider>
                   <div class="row mt-4">
                     <div class="col">
-                      <h6>Producers</h6>
+                      <h6>Producer</h6>
                       <span *ngFor="let item of titleInfo.mainParticipants.producers">
                         <mat-label class="d-block mt-2">{{ item.participant.name }}</mat-label>
                       </span>
@@ -63,10 +63,23 @@
                       </div>
                     </div>
                   </div>
+                  <div class="row mt-4">
+                    <div class="col">
+                      <h4>Other Movie Names</h4>
+                      <div *ngFor="let name of titleInfo.otherNames" class="row d-block mt-2">
+                        <div class="col-md-6">
+                          <mat-label class="badge badge-primary">{{ name.titleNameLanguage }}</mat-label>
+                        </div>
+                        <div class="col-md-6">
+                          <mat-label class="mr-4">{{ name.titleName }}</mat-label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-4 align-self-end">
+            <div class="col-md-4">
               <div class="card">
                 <div class="card-body">
                   <h4>Awards</h4>
