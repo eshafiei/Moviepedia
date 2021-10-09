@@ -7,3 +7,17 @@
   line-height: 1em;
   letter-spacing: 1px;
 }
+
+.poster_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .poster {
+    display: block;
+    max-width:550px;
+    max-height:350px;
+    width: auto;
+    height: auto;
+  }
+}
+
