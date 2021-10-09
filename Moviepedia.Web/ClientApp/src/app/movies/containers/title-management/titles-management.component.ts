@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatAutocompleteTrigger, MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatAutocompleteTrigger, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ChoiceModel } from 'src/app/common/models/choice-item.model';
@@ -15,63 +16,71 @@ import { TitleService } from '../../services/titles.service';
 export class TitlesManagementComponent implements OnInit {
   titlesInfo: Title[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatAutocompleteTrigger, { static: true }) trigger: MatAutocompleteTrigger;
+  @ViewChild(MatAutocompleteTrigger, { static: false }) trigger: MatAutocompleteTrigger;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   isExpanded: boolean;
-  dataSource: any;
+  dataSource: MatTableDataSource<Title> = new MatTableDataSource<Title>();
   displayedColumns: string[] = [
     'titleName',
     'releaseYear'
   ];
 
-  constructor(private titlesService: TitleService) { }
+  constructor(private titlesService: TitleService,
+    private router: Router) { }
   titleSearchAutoComplete = new FormControl();
-  filteredOptions: Observable<ChoiceModel<number>[]>;
-  options: ChoiceModel<number>[] = [];
+  filteredTitleOptions: Observable<ChoiceModel<number>[]>;
+  titleOptions: ChoiceModel<number>[] = [];
+  yearOptions: ChoiceModel<number>[] = [];
 
   ngOnInit() {
     this.isExpanded = true;
     this.loadData();
 
-    this.filteredOptions = this.titleSearchAutoComplete.valueChanges
+    this.filteredTitleOptions = this.titleSearchAutoComplete.valueChanges
       .pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value.description),
-        map(name => name ? this.filter(name) : this.options.slice())
+        map(name => name ? this.filterTitlesDropDown(name) : this.titleOptions.slice())
       );
   }
 
-  loadData() {
-    this.titlesService.getAllTitles()
-      .subscribe((titlesData: Title[]) => {
-        this.titlesInfo = titlesData;
-        this.dataSource = new MatTableDataSource(this.titlesInfo);
-        this.dataSource.paginator = this.paginator;
-        titlesData.forEach((item) => {
-          const titleOption: ChoiceModel<number> = {
-            description: item.titleName,
-            value: item.titleId
-          };
-          this.options.push(titleOption);
-        });
-      });
+  async loadData() {
+    this.titlesInfo = await this.titlesService.getAllTitles();
+    this.dataSource = new MatTableDataSource(this.titlesInfo);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator.pageSize = 10;
+    this.dataSource.sort = this.sort;
+
+    this.titlesInfo.forEach((item) => {
+      const titleOption: ChoiceModel<number> = {
+        description: item.titleName,
+        value: item.titleId
+      };
+      this.titleOptions.push(titleOption);
+    });
   }
 
   displayFn(title: ChoiceModel<number>): string {
     return title && title.description ? title.description : '';
   }
 
-  private filter(titleName: string): ChoiceModel<number>[] {
+  private filterTitlesDropDown(titleName: string): ChoiceModel<number>[] {
     const filterValue = titleName.toLowerCase();
-    const filteredOptions = this.options.filter(option => option.description.toLowerCase().includes(filterValue));
+    this.dataSource.filter = titleName.toLowerCase();
+    const filteredOptions = this.titleOptions.filter(option => option.description.toLowerCase().includes(filterValue));
     return filteredOptions;
   }
 
+  filterGridData = (value: string) => {
+    this.dataSource.filter = value.trim().toLocaleLowerCase();
+  }
+
   onTitleSelected(titleOption: ChoiceModel<number>) {
-    this.titleSearchAutoComplete.setValue('');
     if (titleOption.value) {
       const filteredTitles = this.titlesInfo.filter(t => t.titleId === titleOption.value);
       this.dataSource = new MatTableDataSource(filteredTitles);
       this.dataSource.paginator = this.paginator;
+      this.router.navigate(['/movie', titleOption.value]);
     }
   }
 }

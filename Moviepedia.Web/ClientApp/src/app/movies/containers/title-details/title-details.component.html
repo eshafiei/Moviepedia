@@ -8,7 +8,7 @@
               <h3>{{ titleInfo.titleName }}</h3><h6>({{ titleInfo.releaseYear }})</h6>
             </div>
             <div class="col-md-7 align-self-end text-right">
-              <h6><span class="badge badge-pill badge-info ml-2 genre-badge" *ngFor="let item of titleInfo.titleGenres">{{ item.genre.name }}</span></h6>
+              <h6><span class="badge badge-pill badge-info ml-2 mt-2 genre-badge" *ngFor="let item of titleInfo.titleGenres">{{ item.genre.name }}</span></h6>
             </div>
           </div>
         </div>
@@ -94,9 +94,9 @@
                       <mat-label>Category:</mat-label><span class="ml-2">{{ award.award1 }}</span>
                     </mat-list-item>
                     <mat-list-item>
-                      Award Won:
+                      Award:
                       <span class="badge ml-2 award-badge" ngClass="{{award.awardWon ? 'badge-success' : 'badge-danger'}}">
-                        {{ award.awardWon ? 'Yes' : 'No' }}
+                        {{ award.awardWon ? 'Winner' : 'Nominee' }}
                       </span>
                     </mat-list-item>
                     <mat-divider></mat-divider>

@@ -10,7 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatAutocompleteModule, MatGridListModule, MatInputModule, MatListModule, MatPaginatorModule, MatProgressSpinnerModule, MatTableModule } from '@angular/material';
+import { MatAutocompleteModule, MatGridListModule, MatInputModule, MatListModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTableModule } from '@angular/material';
 import { httpInterceptorProviders } from './common/interceptors';
 import { LoaderComponent } from './common/components/loader/loader.component';
 import { TitlesManagementComponent } from './movies/containers/title-management/titles-management.component';
@@ -40,6 +40,7 @@ import { TitleDetailsComponent } from './movies/containers/title-details/title-d
     ]),
     BrowserAnimationsModule,
     MatPaginatorModule,
+    MatSortModule,
     MatTableModule,
     MatProgressSpinnerModule,
     MatInputModule,
