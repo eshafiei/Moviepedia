@@ -31,6 +31,12 @@ export class TitleService {
     return titleInfo;
   }
 
+  async getMovieDbInfo(titleName: string) : Promise<any> {
+    const movieDbApiKey = environment.moviedb_api_key;
+    const movieDbApiEndPointBaseUrl = environment.movieDbApiEndPointBaseUrl;
+    return this.http.get(`${movieDbApiEndPointBaseUrl}?api_key=${movieDbApiKey}&query=${titleName}`).toPromise();
+  }
+
   setMainParticipants(participants: TitleParticipant[]) : TitleMainParticipants {
     const directors = participants.filter(p => p.roleType.trim().toLowerCase() === RoleType.Director);
     const producers = participants.filter(p => p.roleType.trim().toLowerCase() === RoleType.Producer);

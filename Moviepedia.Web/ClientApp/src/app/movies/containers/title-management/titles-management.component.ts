@@ -53,7 +53,7 @@ export class TitlesManagementComponent implements OnInit {
 
     this.titlesInfo.forEach((item) => {
       const titleOption: ChoiceModel<number> = {
-        description: item.titleName,
+        description: `${item.titleName} (${item.releaseYear})`,
         value: item.titleId
       };
       this.titleOptions.push(titleOption);

@@ -10,6 +10,8 @@ import { TitleService } from '../../services/titles.service';
 })
 export class TitleDetailsComponent implements OnInit {
   titleInfo: Title;
+  movieDbInfo: any;
+  moviePosterUrl: string;
   constructor(private route: ActivatedRoute,
     private titlesService: TitleService) { }
 
@@ -20,5 +22,8 @@ export class TitleDetailsComponent implements OnInit {
 
   async loadData(titleId: number) {
     this.titleInfo = await this.titlesService.getTitleById(titleId);
+    this.movieDbInfo = await this.titlesService.getMovieDbInfo(this.titleInfo.titleName);
+    this.moviePosterUrl = 'https://image.tmdb.org/t/p/w500/' + this.movieDbInfo.results[0].poster_path;
+    console.log(this.movieDbInfo.results[0]);
   }
 }
