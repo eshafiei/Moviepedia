@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Moviepedia.Data.Entities;
 using Moviepedia.Services.Movies;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Moviepedia.Web.Controllers
@@ -50,11 +51,11 @@ namespace Moviepedia.Web.Controllers
         public async Task<Title> GetTitleById(int titleId)
         {
             var title = await _titlesContext.Titles
-                .Include(p => p.TitleGenres)
-                .Include(p => p.Awards)
-                .Include(p => p.TitleParticipants)
-                .Include(p => p.StoryLines)
-                .Include(p => p.OtherNames)
+                .Include(g => g.TitleGenres).ThenInclude(cs => cs.Genre)
+                .Include(a => a.Awards)
+                .Include(t => t.TitleParticipants).ThenInclude(cs => cs.Participant)
+                .Include(s => s.StoryLines)
+                .Include(o => o.OtherNames)
                 .SingleOrDefaultAsync(t => t.TitleId == titleId);
 
             if (title == null)
