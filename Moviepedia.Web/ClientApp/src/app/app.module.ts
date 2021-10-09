@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -10,10 +10,11 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatPaginatorModule, MatProgressSpinnerModule, MatTableModule } from '@angular/material';
-import { TitlesManagementComponent } from './movies/containers/titles-management.component';
+import { MatAutocompleteModule, MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatTableModule } from '@angular/material';
 import { httpInterceptorProviders } from './common/interceptors';
 import { LoaderComponent } from './common/components/loader/loader.component';
+import { TitlesManagementComponent } from './movies/containers/title-management/titles-management.component';
+import { TitleDetailsComponent } from './movies/containers/title-details/title-details.component';
 
 @NgModule({
   declarations: [
@@ -23,21 +24,26 @@ import { LoaderComponent } from './common/components/loader/loader.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    TitlesManagementComponent
+    TitlesManagementComponent,
+    TitleDetailsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'movies', component: TitlesManagementComponent },
+      { path: 'movie/:id', component: TitleDetailsComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ]),
     BrowserAnimationsModule,
     MatPaginatorModule,
     MatTableModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatInputModule,
+    MatAutocompleteModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

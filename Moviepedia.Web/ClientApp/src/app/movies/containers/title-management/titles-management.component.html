@@ -1,0 +1,33 @@
+<div class="card">
+  <div class="card-header">Movies Summary</div>
+  <div class="card-body">
+    <form class="titles-form">
+      <mat-form-field class="title-search-full-width" appearance="outline">
+        <mat-label>Title name</mat-label>
+        <input type="text" matInput [formControl]="titleSearchAutoComplete" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+            (optionSelected)="onTitleSelected($event.option.value)">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option.description}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-2" *ngIf="titlesInfo?.length > 0">
+      <ng-container matColumnDef="titleName">
+          <th mat-header-cell *matHeaderCellDef class="font-weight-bold">Title Name</th>
+          <td mat-cell *matCellDef="let title">
+              <a [routerLink]="['/movie', title.titleId]" class="text-primary">{{ title.titleName }}</a>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="releaseYear">
+            <th mat-header-cell *matHeaderCellDef class="font-weight-bold">Release Year</th>
+            <td mat-cell *matCellDef="let title">{{ title.releaseYear }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="titlesInfo?.length === 0" class="mt-1">No records found.</div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

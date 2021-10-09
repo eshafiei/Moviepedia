@@ -32,7 +32,7 @@ namespace Moviepedia.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Title>> GetAllMovies()
+        public async Task<IEnumerable<Title>> GetAllTitles()
         {
             var titles = await _titlesContext.Titles
                 .Include(p => p.TitleGenres)
@@ -44,6 +44,25 @@ namespace Moviepedia.Web.Controllers
             }
 
             return titles;
+        }
+
+        [HttpGet("{titleId}")]
+        public async Task<Title> GetTitleById(int titleId)
+        {
+            var title = await _titlesContext.Titles
+                .Include(p => p.TitleGenres)
+                .Include(p => p.Awards)
+                .Include(p => p.TitleParticipants)
+                .Include(p => p.StoryLines)
+                .Include(p => p.OtherNames)
+                .SingleOrDefaultAsync(t => t.TitleId == titleId);
+
+            if (title == null)
+            {
+                return null;
+            }
+
+            return title;
         }
     }
 }
