@@ -11,6 +11,11 @@ export class TitleService {
 
   getAllTitles(): Observable<any> {
     const baseUrl = environment.baseUrl;
-    return this.http.get(baseUrl + '/movies/getAllMovies');
+    return this.http.get(baseUrl + '/movies/getAllTitles');
+  }
+
+  getTitleById(titleId: number): Observable<any> {
+    const baseUrl = environment.baseUrl;
+    return this.http.get(baseUrl + '/movies/getTitleById/' + titleId);
   }
 }
