@@ -8,6 +8,7 @@ import { TitleMainParticipants } from '../models/title-main-participants.model';
 import { TitleParticipant } from '../models/title-participant.model';
 import { OtherNames } from '../models/other-names.model';
 import { TitleNameType } from '../enums/title-name-type.enum';
+import { Award } from '../models/award.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,10 @@ import { TitleNameType } from '../enums/title-name-type.enum';
 export class TitleService {
   constructor(private http: HttpClient) {}
 
-  getAllTitles(): Observable<any> {
+  async getAllTitles(): Promise<any>{
     const baseUrl = environment.baseUrl;
-    return this.http.get(baseUrl + '/movies/getAllTitles');
+    const allTitles = await this.http.get(baseUrl + '/movies/getAllTitles').toPromise();
+    return allTitles;
   }
 
   async getTitleById(titleId: number): Promise<Title> {
@@ -25,6 +27,7 @@ export class TitleService {
     let titleInfo: Title = await this.http.get(baseUrl + '/movies/getTitleById/' + titleId).toPromise();
     titleInfo.mainParticipants = this.setMainParticipants(titleInfo.titleParticipants);
     titleInfo.otherNames = this.filterOtherNames(titleInfo.otherNames);
+    titleInfo.awards = this.sortAwards(titleInfo.awards);
     return titleInfo;
   }
 
@@ -59,5 +62,11 @@ export class TitleService {
 
   filterOtherNames(movieNames: OtherNames[]) : OtherNames[] {
     return movieNames.filter(m => m.titleNameType.toLowerCase() !== TitleNameType.Primary);
+  }
+
+  sortAwards(awards: Award[]) {
+    return awards.sort((x, y) => {
+      return Number(y.awardWon) - Number(x.awardWon);
+    });
   }
 }
