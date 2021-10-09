@@ -10,7 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatAutocompleteModule, MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatTableModule } from '@angular/material';
+import { MatAutocompleteModule, MatGridListModule, MatInputModule, MatListModule, MatPaginatorModule, MatProgressSpinnerModule, MatTableModule } from '@angular/material';
 import { httpInterceptorProviders } from './common/interceptors';
 import { LoaderComponent } from './common/components/loader/loader.component';
 import { TitlesManagementComponent } from './movies/containers/title-management/titles-management.component';
@@ -33,7 +33,7 @@ import { TitleDetailsComponent } from './movies/containers/title-details/title-d
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: TitlesManagementComponent, pathMatch: 'full' },
       { path: 'movies', component: TitlesManagementComponent },
       { path: 'movie/:id', component: TitleDetailsComponent },
       { path: 'fetch-data', component: FetchDataComponent },
@@ -43,7 +43,9 @@ import { TitleDetailsComponent } from './movies/containers/title-details/title-d
     MatTableModule,
     MatProgressSpinnerModule,
     MatInputModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatGridListModule,
+    MatListModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

@@ -1,3 +1,99 @@
-<p>Title Name: {{titleInfo?.titleName}}</p>
-
-
+<div class="container" *ngIf="titleInfo">
+  <div class="row">
+    <div class="col-md">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-4">
+              <h3>{{ titleInfo.titleName }}</h3><h6>({{ titleInfo.releaseYear }})</h6>
+            </div>
+            <div class="col-md-8 align-self-end text-right">
+              <h6><span class="badge badge-pill badge-info ml-2 genre-badge" *ngFor="let item of titleInfo.titleGenres">{{ item.genre.name }}</span></h6>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row mt-2">
+            <div class="col-md-8 align-self-start">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h4>Top cast</h4>
+                      <div class="row mt-3">
+                        <div class="col-md-4 mt-3 text-center" *ngFor="let item of titleInfo.mainParticipants.topCast">
+                          <img src="../../../../assets/images/person.png" alt="movie star picture" class="img-thumbnail">
+                          <mat-label class="d-block mt-2">{{item.participant.name}}</mat-label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col">
+                      <h6>Director</h6>
+                      <span *ngFor="let item of titleInfo.mainParticipants.directors">
+                        <mat-label class="d-block mt-2">{{ item.participant.name }}</mat-label>
+                      </span>
+                    </div>
+                  </div>
+                  <mat-divider class="mt-4"></mat-divider>
+                  <div class="row mt-4">
+                    <div class="col">
+                      <h6>Producers</h6>
+                      <span *ngFor="let item of titleInfo.mainParticipants.producers">
+                        <mat-label class="d-block mt-2">{{ item.participant.name }}</mat-label>
+                      </span>
+                    </div>
+                  </div>
+                  <mat-divider class="mt-4"></mat-divider>
+                  <div class="row mt-4">
+                    <div class="col">
+                      <h6>ScreenPlay</h6>
+                      <span *ngFor="let item of titleInfo.mainParticipants.screenPlay">
+                        <mat-label class="d-block mt-2">{{ item.participant.name }}</mat-label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col">
+                      <h4>Storyline</h4>
+                      <div *ngFor="let story of titleInfo.storyLines">
+                        <h6 class="badge badge-warning">{{story.type}}</h6>
+                        <p>{{ story.description }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 align-self-end">
+              <div class="card">
+                <div class="card-body">
+                  <h4>Awards</h4>
+                  <mat-list *ngFor="let award of titleInfo.awards">
+                    <mat-list-item>
+                      {{ award.awardCompany }}
+                    </mat-list-item>
+                    <mat-list-item>
+                      Year: <span class="ml-2">{{ award.awardYear }}</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                      <mat-label>Category:</mat-label><span class="ml-2">{{ award.award1 }}</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                      Award Won:
+                      <span class="badge ml-2 award-badge" ngClass="{{award.awardWon ? 'badge-success' : 'badge-danger'}}">
+                        {{ award.awardWon ? 'Yes' : 'No' }}
+                      </span>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                  </mat-list>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
