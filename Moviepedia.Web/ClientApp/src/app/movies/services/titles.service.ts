@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.prod';
-import { Observable } from 'rxjs';
 import { Title } from '../models/title.model';
 import { RoleType } from '../enums/role-type.enum';
 import { TitleMainParticipants } from '../models/title-main-participants.model';
@@ -29,12 +28,6 @@ export class TitleService {
     titleInfo.otherNames = this.filterOtherNames(titleInfo.otherNames);
     titleInfo.awards = this.sortAwards(titleInfo.awards);
     return titleInfo;
-  }
-
-  async getMovieDbInfo(titleName: string) : Promise<any> {
-    const movieDbApiKey = environment.moviedb_api_key;
-    const movieDbApiEndPointBaseUrl = environment.movieDbApiEndPointBaseUrl;
-    return this.http.get(`${movieDbApiEndPointBaseUrl}?api_key=${movieDbApiKey}&query=${titleName}`).toPromise();
   }
 
   setMainParticipants(participants: TitleParticipant[]) : TitleMainParticipants {

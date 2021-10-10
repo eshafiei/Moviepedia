@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '../../models/title.model';
+import { MovieDbApiService } from '../../services/moviedb-api.service';
 import { TitleService } from '../../services/titles.service';
 
 @Component({
@@ -10,10 +11,11 @@ import { TitleService } from '../../services/titles.service';
 })
 export class TitleDetailsComponent implements OnInit {
   titleInfo: Title;
-  movieDbInfo: any;
+  movieInfo: any;
   moviePosterUrl: string;
   constructor(private route: ActivatedRoute,
-    private titlesService: TitleService) { }
+    private titlesService: TitleService,
+    private moviedbApiService: MovieDbApiService) { }
 
   ngOnInit() {
     const titleId = Number(this.route.snapshot.paramMap.get('id'));
@@ -22,8 +24,30 @@ export class TitleDetailsComponent implements OnInit {
 
   async loadData(titleId: number) {
     this.titleInfo = await this.titlesService.getTitleById(titleId);
-    this.movieDbInfo = await this.titlesService.getMovieDbInfo(this.titleInfo.titleName);
-    this.moviePosterUrl = 'https://image.tmdb.org/t/p/w500/' + this.movieDbInfo.results[0].poster_path;
-    console.log(this.movieDbInfo.results[0]);
+    this.movieInfo = await this.moviedbApiService.getMovieInfo(this.titleInfo.titleName);
+    this.moviePosterUrl = 'https://image.tmdb.org/t/p/w500/' + this.movieInfo.results[0].poster_path;
+    this.getCastPictures(this.movieInfo.results[0].id);
+    console.log(this.movieInfo.results[0]);
+  }
+
+  async getCastPictures(movieId: number) {
+    let castInfoFromApi: any[] = [];
+    const movieCreditInfo = await this.moviedbApiService.getMovieCreditInfo(movieId);
+    this.titleInfo.mainParticipants.topCast.forEach((cast) => {
+      castInfoFromApi.push(movieCreditInfo.cast.filter(c => c.original_name.toLowerCase() === cast.participant.name.toLowerCase()));
+    });
+
+    castInfoFromApi.forEach((person) => {
+      this.moviedbApiService.getPersonInfo(person[0].id)
+      .subscribe((topCastInfo: any) => {
+          console.log(topCastInfo);
+          this.titleInfo.mainParticipants.topCast.forEach((cast, i) => {
+            if (cast.participant.name.toLowerCase() === topCastInfo.name.toLowerCase()) {
+              this.titleInfo.mainParticipants.topCast[i].pictureUrl =
+                'https://image.tmdb.org/t/p/w500/' + topCastInfo.profile_path;
+            }
+          });
+      });
+    });
   }
 }

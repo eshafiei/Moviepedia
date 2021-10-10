@@ -6,6 +6,7 @@ export interface TitleParticipant {
   isOnScreen: boolean;
   participant: Participant;
   participantId: number;
+  pictureUrl?: string;
   roleType: string;
   titleId: number;
 }
