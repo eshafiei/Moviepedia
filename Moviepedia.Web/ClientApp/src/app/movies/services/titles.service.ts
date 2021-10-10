@@ -46,7 +46,6 @@ export class TitleService {
 
   removeDuplicates(TitleParticipants: TitleParticipant[]) : TitleParticipant[] {
     let uniqueItems: TitleParticipant[] = [];
-    console.log('TitleParticipants', TitleParticipants);
     TitleParticipants.forEach((p: TitleParticipant) => {
       if (uniqueItems.length === 0) {
         uniqueItems.push(p);
@@ -55,7 +54,6 @@ export class TitleService {
         uniqueItems.push(p);
       }
     });
-    console.log('uniqueItems', uniqueItems);
     return uniqueItems;
   }
 

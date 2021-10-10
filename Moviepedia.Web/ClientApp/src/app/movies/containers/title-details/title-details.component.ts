@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { Title } from '../../models/title.model';
 import { MovieDbApiService } from '../../services/moviedb-api.service';
 import { TitleService } from '../../services/titles.service';
@@ -25,9 +26,9 @@ export class TitleDetailsComponent implements OnInit {
   async loadData(titleId: number) {
     this.titleInfo = await this.titlesService.getTitleById(titleId);
     this.movieInfo = await this.moviedbApiService.getMovieInfo(this.titleInfo.titleName);
-    this.moviePosterUrl = 'https://image.tmdb.org/t/p/w500/' + this.movieInfo.results[0].poster_path;
+    console.log(this.movieInfo);
+    this.moviePosterUrl = environment.imageBaseUrl + this.movieInfo.results[0].poster_path;
     this.getCastPictures(this.movieInfo.results[0].id);
-    console.log(this.movieInfo.results[0]);
   }
 
   async getCastPictures(movieId: number) {
@@ -40,14 +41,15 @@ export class TitleDetailsComponent implements OnInit {
     castInfoFromApi.forEach((person) => {
       this.moviedbApiService.getPersonInfo(person[0].id)
       .subscribe((topCastInfo: any) => {
-          console.log(topCastInfo);
           this.titleInfo.mainParticipants.topCast.forEach((cast, i) => {
             if (cast.participant.name.toLowerCase() === topCastInfo.name.toLowerCase()) {
               this.titleInfo.mainParticipants.topCast[i].pictureUrl =
-                'https://image.tmdb.org/t/p/w500/' + topCastInfo.profile_path;
+                environment.imageBaseUrl + topCastInfo.profile_path;
             }
           });
       });
     });
   }
+
+
 }
