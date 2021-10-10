@@ -1,0 +1,20 @@
+<mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-description>
+          <strong>Other Movie Names</strong>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-list *ngFor="let name of otherNames">
+        <div class="row d-block mt-2">
+            <div class="col">
+                <mat-label class="badge badge-primary">{{ name.titleNameLanguage }}</mat-label>
+            </div>
+            <div class="col">
+                <mat-label class="mr-4">{{ name.titleName }}</mat-label>
+            </div>
+        </div>
+      </mat-list>
+    </mat-expansion-panel>
+  </mat-accordion>

@@ -7,14 +7,15 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatAutocompleteModule, MatGridListModule, MatInputModule, MatListModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTableModule } from '@angular/material';
+import { MatAccordion, MatAutocompleteModule, MatExpansionModule, MatGridListModule, MatInputModule, MatListModule,
+  MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTableModule } from '@angular/material';
 import { httpInterceptorProviders } from './common/interceptors';
 import { LoaderComponent } from './common/components/loader/loader.component';
 import { TitlesManagementComponent } from './movies/containers/title-management/titles-management.component';
 import { TitleDetailsComponent } from './movies/containers/title-details/title-details.component';
+import { TitleAwardsComponent } from './movies/components/title-awards/title-awards.component';
+import { TitleNamesComponent } from './movies/components/title-names/title-names.component';
 
 @NgModule({
   declarations: [
@@ -22,10 +23,10 @@ import { TitleDetailsComponent } from './movies/containers/title-details/title-d
     NavMenuComponent,
     LoaderComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
     TitlesManagementComponent,
-    TitleDetailsComponent
+    TitleDetailsComponent,
+    TitleAwardsComponent,
+    TitleNamesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -35,8 +36,7 @@ import { TitleDetailsComponent } from './movies/containers/title-details/title-d
     RouterModule.forRoot([
       { path: '', component: TitlesManagementComponent, pathMatch: 'full' },
       { path: 'movies', component: TitlesManagementComponent },
-      { path: 'movie/:id', component: TitleDetailsComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'movie/:id', component: TitleDetailsComponent }
     ]),
     BrowserAnimationsModule,
     MatPaginatorModule,
@@ -46,7 +46,8 @@ import { TitleDetailsComponent } from './movies/containers/title-details/title-d
     MatInputModule,
     MatAutocompleteModule,
     MatGridListModule,
-    MatListModule
+    MatListModule,
+    MatExpansionModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
