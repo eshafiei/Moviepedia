@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Moviepedia.Data.Entities;
 using Moviepedia.Services.Movies;
+using Moviepedia.Web.Extensions;
 
 namespace Moviepedia.Web
 {
@@ -24,6 +23,8 @@ namespace Moviepedia.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
+
             services.AddCors(options => {
                 options.AddPolicy("corspolicy", builder => builder
                  .AllowAnyOrigin()
@@ -33,14 +34,14 @@ namespace Moviepedia.Web
             });
 
             services.AddDbContext<TitlesContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:moviepediaDb"]));
-
+            
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
-            services.Add(new ServiceDescriptor(typeof(IMoviesService), typeof(MoviesService), ServiceLifetime.Scoped));
-            
+            services.AddScoped<IMoviesService, MoviesService>();
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -63,11 +64,14 @@ namespace Moviepedia.Web
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
             }
+
+            app.ConfigureCustomExceptionMiddleware();
 
             app.UseRouting();
 
@@ -90,8 +94,6 @@ namespace Moviepedia.Web
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-
-            
         }
     }
 }

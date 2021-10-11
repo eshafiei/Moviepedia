@@ -26,9 +26,13 @@ export class TitleDetailsComponent implements OnInit {
   async loadData(titleId: number) {
     this.titleInfo = await this.titlesService.getTitleById(titleId);
     this.movieInfo = await this.moviedbApiService.getMovieInfo(this.titleInfo.titleName);
-    console.log(this.movieInfo);
-    this.moviePosterUrl = environment.imageBaseUrl + this.movieInfo.results[0].poster_path;
-    this.getCastPictures(this.movieInfo.results[0].id);
+    console.log(this.titleInfo);
+    if (this.movieInfo && this.movieInfo.results[0] && this.movieInfo.results[0].poster_path) {
+      this.moviePosterUrl = environment.imageBaseUrl + this.movieInfo.results[0].poster_path;
+      this.getCastPictures(this.movieInfo.results[0].id);
+    } else {
+      this.moviePosterUrl = '../../../../../../assets/images/movie-poster.png';
+    }
   }
 
   async getCastPictures(movieId: number) {

@@ -6,6 +6,8 @@ namespace Moviepedia.Services.Movies
 {
     public interface IMoviesService
     {
-        Task<IEnumerable<Title>> GetAllMovies();
+        Task<IEnumerable<Title>> GetAllTitles();
+
+        Task<Title> GetTitleById(int titleId);
     }
 }
