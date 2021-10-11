@@ -16,6 +16,7 @@ import { TitlesManagementComponent } from './movies/containers/title-management/
 import { TitleDetailsComponent } from './movies/containers/title-details/title-details.component';
 import { TitleAwardsComponent } from './movies/components/title-awards/title-awards.component';
 import { TitleNamesComponent } from './movies/components/title-names/title-names.component';
+import { TitleSearchComponent } from './movies/containers/title-search/title-search.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { TitleNamesComponent } from './movies/components/title-names/title-names
     TitlesManagementComponent,
     TitleDetailsComponent,
     TitleAwardsComponent,
-    TitleNamesComponent
+    TitleNamesComponent,
+    TitleSearchComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -34,7 +36,8 @@ import { TitleNamesComponent } from './movies/components/title-names/title-names
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: TitlesManagementComponent, pathMatch: 'full' },
+      { path: '', component: TitleSearchComponent, pathMatch: 'full' },
+      { path: 'search', component: TitleSearchComponent },
       { path: 'movies', component: TitlesManagementComponent },
       { path: 'movie/:id', component: TitleDetailsComponent }
     ]),

@@ -1,0 +1,28 @@
+.search-full-width {
+  width: 400px;
+}
+
+::ng-deep .mat-form-field-outline-start {
+  border-radius: 10px 0 0 10px !important;
+  min-width: 10px !important;
+}
+
+::ng-deep .mat-form-field-outline-end {
+  border-radius: 0 10px 10px 0 !important;
+}
+
+.page-container {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-full-width {
+  width: 45vw;
+}
+
+.logo-container {
+  margin-bottom: 20px;
+}
