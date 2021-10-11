@@ -1,9 +1,9 @@
 <header>
   <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light nav-bg border-bottom box-shadow mb-3"
   >
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/movies']">Moviepedia</a>
+      <a class="navbar-brand text-white" [routerLink]="['/movies']">Moviepedia</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -21,14 +21,9 @@
       >
         <ul class="navbar-nav flex-grow">
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/movies']">Movies</a
+            <a class="nav-link text-white" [routerLink]="['/movies']">Movies</a
             >
           </li>
-          <!-- <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
-            >
-          </li> -->
         </ul>
       </div>
     </div>

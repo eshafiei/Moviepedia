@@ -2,13 +2,13 @@
   <div class="row">
     <div class="col-md">
       <div class="card">
-        <div class="card-header">
+        <div class="card-header font-weight-bold header-bg">
           <div class="row">
             <div class="col-md-5">
-              <h3>{{ titleInfo.titleName }}</h3><h6>({{ titleInfo.releaseYear }})</h6>
+              <h3 class="text-white">{{ titleInfo.titleName }}</h3><h6 class="text-white">({{ titleInfo.releaseYear }})</h6>
             </div>
             <div class="col-md-7 align-self-end text-right">
-              <h6><span class="badge badge-pill badge-info ml-2 mt-2 genre-badge" *ngFor="let item of titleInfo.titleGenres">{{ item.genre.name }}</span></h6>
+              <h6><span class="badge badge-pill ml-2 mt-2 genre-badge custom-badge" *ngFor="let item of titleInfo.titleGenres">{{ item.genre.name }}</span></h6>
             </div>
           </div>
         </div>
