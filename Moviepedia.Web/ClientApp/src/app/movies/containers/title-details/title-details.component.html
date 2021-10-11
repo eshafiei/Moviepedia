@@ -17,13 +17,13 @@
             <div class="col-md-8 align-self-start">
               <div class="card">
                 <div class="card-body">
-                  <div class="row">
+                  <div class="row" *ngIf="movieInfo?.results[0]">
                     <div class="col">
                       <h4>Overview</h4>
                       <mat-label>{{movieInfo?.results[0]?.overview}}</mat-label>
                     </div>
                   </div>
-                  <div class="row mt-4">
+                  <div class="row mt-4" *ngIf="titleInfo.mainParticipants.topCast.length > 0">
                     <div class="col">
                       <h4>Top cast</h4>
                       <div class="row mt-3">
@@ -84,7 +84,7 @@
                     </div>
                   </div>
                   <mat-divider></mat-divider>
-                  <div class="row mt-3">
+                  <div class="row mt-3" *ngIf="movieInfo?.results[0]">
                     <div class="col-md-8">
                       <mat-label class="font-weight-bold">Release: {{movieInfo?.results[0]?.release_date | date}}</mat-label>
                     </div>
@@ -96,7 +96,7 @@
                     <div class="col">
                       <app-title-awards [titleAwards]="titleInfo.awards"></app-title-awards>
                     </div>
-                  </div>                
+                  </div>
                   <mat-divider></mat-divider>
                   <div class="row mt-3" *ngIf="titleInfo.otherNames.length > 0">
                     <div class="col">

@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Moviepedia.Data.Entities;
 using Moviepedia.Services.Movies;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Moviepedia.Web.Controllers
@@ -12,58 +8,37 @@ namespace Moviepedia.Web.Controllers
     [Route("api/[controller]/[action]")]
     public class MoviesController : ControllerBase
     {
-        //private readonly IMoviesService _moviesService;
+        private readonly IMoviesService _moviesService;
 
-        //public MoviesController(MoviesService moviesService)
-        //{
-        //    _moviesService = moviesService;
-        //}
-
-        //[HttpGet("[action]")]
-        //public async Task<IEnumerable<Title>> GetAllMovies()
-        //{
-        //    return await _moviesService.GetAllMovies();
-        //}
-
-        private readonly TitlesContext _titlesContext;
-
-        public MoviesController(TitlesContext titlesContext)
+        public MoviesController(IMoviesService moviesService)
         {
-            _titlesContext = titlesContext;
+            _moviesService = moviesService;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Title>> GetAllTitles()
+        public async Task<IActionResult> GetAllTitles()
         {
-            var titles = await _titlesContext.Titles
-                .Include(p => p.TitleGenres)
-                .ToListAsync();
+            var response = await _moviesService.GetAllTitles();
 
-            if (titles == null)
+            if (response == null)
             {
-                return null;
+                return NotFound();
             }
 
-            return titles;
+            return Ok(response);
         }
 
         [HttpGet("{titleId}")]
-        public async Task<Title> GetTitleById(int titleId)
+        public async Task<IActionResult> GetTitleById(int titleId)
         {
-            var title = await _titlesContext.Titles
-                .Include(g => g.TitleGenres).ThenInclude(cs => cs.Genre)
-                .Include(a => a.Awards)
-                .Include(t => t.TitleParticipants).ThenInclude(cs => cs.Participant)
-                .Include(s => s.StoryLines)
-                .Include(o => o.OtherNames)
-                .SingleOrDefaultAsync(t => t.TitleId == titleId);
+            var response = await _moviesService.GetTitleById(titleId);
 
-            if (title == null)
+            if (response == null)
             {
-                return null;
+                return NotFound();
             }
 
-            return title;
+            return Ok(response);            
         }
     }
 }
