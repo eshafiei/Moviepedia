@@ -26,7 +26,6 @@ export class TitleDetailsComponent implements OnInit {
   async loadData(titleId: number) {
     this.titleInfo = await this.titlesService.getTitleById(titleId);
     this.movieInfo = await this.moviedbApiService.getMovieInfo(this.titleInfo.titleName);
-    console.log(this.titleInfo);
     if (this.movieInfo && this.movieInfo.results[0] && this.movieInfo.results[0].poster_path) {
       this.moviePosterUrl = environment.imageBaseUrl + this.movieInfo.results[0].poster_path;
       this.getCastPictures(this.movieInfo.results[0].id);
@@ -42,17 +41,19 @@ export class TitleDetailsComponent implements OnInit {
       castInfoFromApi.push(movieCreditInfo.cast.filter(c => c.original_name.toLowerCase() === cast.participant.name.toLowerCase()));
     });
 
-    castInfoFromApi.forEach((person) => {
-      this.moviedbApiService.getPersonInfo(person[0].id)
-      .subscribe((topCastInfo: any) => {
-          this.titleInfo.mainParticipants.topCast.forEach((cast, i) => {
-            if (cast.participant.name.toLowerCase() === topCastInfo.name.toLowerCase()) {
-              this.titleInfo.mainParticipants.topCast[i].pictureUrl =
-                environment.imageBaseUrl + topCastInfo.profile_path;
-            }
-          });
+    if (castInfoFromApi.length > 0) {
+      castInfoFromApi.forEach((person) => {
+        this.moviedbApiService.getPersonInfo(person[0].id)
+        .subscribe((topCastInfo: any) => {
+            this.titleInfo.mainParticipants.topCast.forEach((cast, i) => {
+              if (cast.participant.name.toLowerCase() === topCastInfo.name.toLowerCase()) {
+                this.titleInfo.mainParticipants.topCast[i].pictureUrl =
+                  environment.imageBaseUrl + topCastInfo.profile_path;
+              }
+            });
+        });
       });
-    });
+    }
   }
 
 
