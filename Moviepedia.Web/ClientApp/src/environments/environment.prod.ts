@@ -1,5 +1,6 @@
 export const environment = {
-  baseUrl: 'https://localhost:44336/api',
+  // baseUrl: 'http://moviepedia-dev.us-east-1.elasticbeanstalk.com/api',
+  baseUrl: 'https://localhost:44339/api',
   moviedb_api_key: 'xxx',
   imageBaseUrl: 'https://image.tmdb.org/t/p/w500/',
   movieInfoApiEndPointBaseUrl: 'https://api.themoviedb.org/3/search/movie',

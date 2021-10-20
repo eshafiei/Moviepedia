@@ -1,20 +1,12 @@
-<div class="page-container">
-  <form>
-    <div class="text-center logo-container">
-      <img src="../../../../assets/images/logo-main.jpg" alt="Moviepedia logo">
+<form>
+  <div class="text-center container">
+    <div class="row mt-5">
+      <div class="col-12 logo-container mb-5 ">
+        <img src="../../../../assets/images/moviepedia-logo.png" alt="Moviepedia logo">
+      </div>
+      <div class="col-12">
+        <app-title-search-input [titleOptions]="titleOptions"></app-title-search-input>
+      </div>
     </div>
-    <mat-form-field class="search-full-width" appearance="outline">
-      <mat-label>Search title by name</mat-label>
-      <input type="text" placeholder="Search title by name" matInput
-        [formControl]="titleSearchAutoComplete" [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-          (optionSelected)="onTitleSelected($event.option.value)">
-        <mat-option *ngFor="let option of filteredTitleOptions | async" [value]="option">
-          {{option.description}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-  </form>
-</div>
-
-
+  </div>
+</form>

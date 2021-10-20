@@ -36,25 +36,12 @@ export class TitleService {
     const screenPlay = participants.filter(p => p.roleType.trim().toLowerCase() === RoleType.Screenplay);
     const topCast = participants.filter(p => p.isKey === true && p.roleType.trim().toLowerCase() === RoleType.Actor);
     const mainParticipants: TitleMainParticipants = {
-      directors: this.removeDuplicates(directors),
-      producers: this.removeDuplicates(producers),
-      screenPlay: this.removeDuplicates(screenPlay),
-      topCast: this.removeDuplicates(topCast)
+      directors: directors,
+      producers: producers,
+      screenPlay: screenPlay,
+      topCast: topCast
     };
     return mainParticipants;
-  }
-
-  removeDuplicates(TitleParticipants: TitleParticipant[]) : TitleParticipant[] {
-    let uniqueItems: TitleParticipant[] = [];
-    TitleParticipants.forEach((p: TitleParticipant) => {
-      if (uniqueItems.length === 0) {
-        uniqueItems.push(p);
-      }
-      else if (!uniqueItems.find((item) => { item.participant.name.toLowerCase() === p.participant.name.toLowerCase() } ) ) {
-        uniqueItems.push(p);
-      }
-    });
-    return uniqueItems;
   }
 
   filterOtherNames(movieNames: OtherNames[]) : OtherNames[] {

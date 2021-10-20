@@ -72,7 +72,7 @@ export class TitlesManagementComponent implements OnInit {
   }
 
   filterGridData = (value: string) => {
-    this.dataSource.filter = value.trim().toLocaleLowerCase();
+    this.dataSource.filter = value.toString().trim().toLowerCase();
   }
 
   onTitleSelected(titleOption: ChoiceModel<number>) {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Moviepedia.Services.Movies
 {
@@ -16,34 +17,38 @@ namespace Moviepedia.Services.Movies
 
         public async Task<IEnumerable<Title>> GetAllTitles()
         {
-            var titles = await _titlesContext.Titles
-                .Include(p => p.TitleGenres)
+            var titles = _titlesContext.Titles
+                .OrderBy(t => t.TitleName)
                 .ToListAsync();
 
-            if (titles == null) 
+            if (titles.Result == null) 
             {
                 return null;
             }
 
-            return titles;
+            return await titles;
         }
 
         public async Task<Title> GetTitleById(int titleId)
         {
-            var title = await _titlesContext.Titles
+            var title = _titlesContext.Titles
                 .Include(g => g.TitleGenres).ThenInclude(cs => cs.Genre)
-                .Include(a => a.Awards)
-                .Include(t => t.TitleParticipants).ThenInclude(cs => cs.Participant)
+                .Include(a => a.Awards.OrderBy(a => a.AwardCompany))
+                .Include(t => t.TitleParticipants.Where(p => p.IsKey == true || (
+                    p.RoleType.ToLower() == "screenplay") || p.RoleType.ToLower() == "producer" || 
+                    p.RoleType.ToLower() == "director"))
+                .ThenInclude(cs => cs.Participant)
                 .Include(s => s.StoryLines)
-                .Include(o => o.OtherNames)
+                .Include(o => o.OtherNames)  
+                .OrderBy(t => t.TitleName)
                 .SingleOrDefaultAsync(t => t.TitleId == titleId);
 
-            if (title == null)
+            if (title.Result == null)
             {
                 return null;
             }
 
-            return title;
+            return await title;
         }
     }
 }
