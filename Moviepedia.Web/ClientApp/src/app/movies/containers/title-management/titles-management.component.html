@@ -7,17 +7,8 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6">
-            <mat-form-field class="search-full-width" appearance="outline">
-              <mat-label>Title name</mat-label>
-              <input type="text" placeholder="Search title by name" matInput
-                [formControl]="titleSearchAutoComplete" [matAutocomplete]="auto" (keyup)="filterGridData($event.target.value)">
-              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-                  (optionSelected)="onTitleSelected($event.option.value)">
-                <mat-option *ngFor="let option of filteredTitleOptions | async" [value]="option">
-                  {{option.description}}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
+            <app-title-search-input [titleOptions]="titleOptions" (keyup)="filterGridData($event)">
+            </app-title-search-input>
           </div>
         </div>
       </div>

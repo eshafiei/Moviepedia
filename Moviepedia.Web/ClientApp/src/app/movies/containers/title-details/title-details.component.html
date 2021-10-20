@@ -14,7 +14,41 @@
         </div>
         <div class="card-body">
           <div class="row mt-2">
-            <div class="col-md-8 align-self-start">
+            <div class="col-md-4 align-self-start">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row mb-3">
+                    <div class="col text-center align-self-center">
+                      <div class="poster_container">
+                        <img src="{{moviePosterUrl}}" onerror="this.onerror=null;this.src='../../../../../../assets/images/movie-poster.png'"
+                          alt="movie poster">
+                      </div>
+                    </div>
+                  </div>
+                  <mat-divider></mat-divider>
+                  <div class="row mt-3" *ngIf="movieInfo?.results[0]">
+                    <div class="col-md-8">
+                      <mat-label class="font-weight-bold">Release: {{movieInfo?.results[0]?.release_date | date}}</mat-label>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-label class="font-weight-bold">Score: {{movieInfo?.results[0]?.vote_average}}</mat-label>
+                    </div>
+                  </div>
+                  <div class="row mt-3" *ngIf="titleInfo.awards.length > 0">
+                    <div class="col">
+                      <app-title-awards [titleAwards]="titleInfo.awards"></app-title-awards>
+                    </div>
+                  </div>
+                  <mat-divider></mat-divider>
+                  <div class="row mt-3" *ngIf="titleInfo.otherNames.length > 0">
+                    <div class="col">
+                      <app-title-names [otherNames]="titleInfo.otherNames"></app-title-names>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
               <div class="card">
                 <div class="card-body">
                   <div class="row" *ngIf="movieInfo?.results[0]">
@@ -25,14 +59,7 @@
                   </div>
                   <div class="row mt-4" *ngIf="titleInfo.mainParticipants.topCast.length > 0">
                     <div class="col">
-                      <h4>Top cast</h4>
-                      <div class="row mt-3">
-                        <div class="col-md-4 mt-3 text-center" *ngFor="let item of titleInfo.mainParticipants.topCast">
-                          <img src="{{item.pictureUrl ? item.pictureUrl : '../../../../../../assets/images/person.png'}}"
-                            alt="movie star picture" class="img-thumbnail cast-picture">
-                          <mat-label class="d-block mt-2">{{item.participant.name}}</mat-label>
-                        </div>
-                      </div>
+                      <app-title-top-cast [topCast]="titleInfo.mainParticipants.topCast"></app-title-top-cast>
                     </div>
                   </div>
                   <div class="row mt-4">
@@ -68,39 +95,6 @@
                         <h6 class="badge badge-warning">{{story.type}}</h6>
                         <p>{{ story.description }}</p>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card">
-                <div class="card-body">
-                  <div class="row mb-3">
-                    <div class="col text-center align-self-center">
-                      <div class="poster_container">
-                        <img src="{{moviePosterUrl}}" alt="movie poster" class="poster">
-                      </div>
-                    </div>
-                  </div>
-                  <mat-divider></mat-divider>
-                  <div class="row mt-3" *ngIf="movieInfo?.results[0]">
-                    <div class="col-md-8">
-                      <mat-label class="font-weight-bold">Release: {{movieInfo?.results[0]?.release_date | date}}</mat-label>
-                    </div>
-                    <div class="col-md-4">
-                      <mat-label class="font-weight-bold">Score: {{movieInfo?.results[0]?.vote_average}}</mat-label>
-                    </div>
-                  </div>
-                  <div class="row mt-3" *ngIf="titleInfo.awards.length > 0">
-                    <div class="col">
-                      <app-title-awards [titleAwards]="titleInfo.awards"></app-title-awards>
-                    </div>
-                  </div>
-                  <mat-divider></mat-divider>
-                  <div class="row mt-3" *ngIf="titleInfo.otherNames.length > 0">
-                    <div class="col">
-                      <app-title-names [otherNames]="titleInfo.otherNames"></app-title-names>
                     </div>
                   </div>
                 </div>

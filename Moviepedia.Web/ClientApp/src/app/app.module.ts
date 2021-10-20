@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatAccordion, MatAutocompleteModule, MatExpansionModule, MatGridListModule, MatInputModule, MatListModule,
+import { MatAutocompleteModule, MatCardModule, MatExpansionModule, MatGridListModule, MatInputModule, MatListModule,
   MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTableModule } from '@angular/material';
 import { httpInterceptorProviders } from './common/interceptors';
 import { LoaderComponent } from './common/components/loader/loader.component';
@@ -17,6 +17,8 @@ import { TitleDetailsComponent } from './movies/containers/title-details/title-d
 import { TitleAwardsComponent } from './movies/components/title-awards/title-awards.component';
 import { TitleNamesComponent } from './movies/components/title-names/title-names.component';
 import { TitleSearchComponent } from './movies/containers/title-search/title-search.component';
+import { TitleTopCastComponent } from './movies/components/title-top-cast/title-top-cast.component';
+import { TitleSearchInputComponent } from './movies/components/title-search-input/title-search-input.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,9 @@ import { TitleSearchComponent } from './movies/containers/title-search/title-sea
     TitleDetailsComponent,
     TitleAwardsComponent,
     TitleNamesComponent,
+    TitleSearchComponent,
+    TitleTopCastComponent,
+    TitleSearchInputComponent,
     TitleSearchComponent
   ],
   imports: [
@@ -50,7 +55,8 @@ import { TitleSearchComponent } from './movies/containers/title-search/title-sea
     MatAutocompleteModule,
     MatGridListModule,
     MatListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCardModule
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

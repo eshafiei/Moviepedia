@@ -1,27 +1,26 @@
 <mat-accordion>
-  <mat-expansion-panel (opened)="panelOpenState = true"
-                       (closed)="panelOpenState = false">
+  <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-description>
-        <strong>Movie Awards</strong>
+        <strong>Awards</strong>
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <mat-list *ngFor="let award of titleAwards">
-      <mat-list-item>
-        {{ award.awardCompany }}
-      </mat-list-item>
-      <mat-list-item>
-        Year: <span class="ml-2">{{ award.awardYear }}</span>
-      </mat-list-item>
-      <mat-list-item>
-        <mat-label>Category:</mat-label><span class="ml-2">{{ award.award1 }}</span>
-      </mat-list-item>
-      <mat-list-item>
-        Award:
-        <span class="badge ml-2 award-badge" ngClass="{{award.awardWon ? 'badge-success' : 'badge-danger'}}">
-          {{ award.awardWon ? 'Winner' : 'Nominee' }}
-        </span>
-      </mat-list-item>
-    </mat-list>
+    <mat-card class="my-card mt-2" *ngFor="let award of titleAwards">
+      <mat-card-header>
+        <img mat-card-avatar  alt="award avatar"
+          src="{{ award.awardCompany.toLowerCase() === 'academy award' ? '../../../../assets/images/oscar-award.png' :
+            award.awardCompany.toLowerCase() === 'golden globe' ? '../../../../assets/images/golden-globe.png' :
+            '../../../../assets/images/award.png'}}">
+        <mat-card-title>{{ award.award1 }}</mat-card-title>
+        <mat-card-subtitle><strong>{{ award.awardYear }}</strong> |
+          <span class="badge ml-2 award-badge" ngClass="{{ award.awardWon ? 'badge-success' : 'badge-danger'}}">
+            {{ award.awardWon ? 'Winner' : 'Nominee' }}
+          </span>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+
+      </mat-card-content>
+    </mat-card>
   </mat-expansion-panel>
 </mat-accordion>

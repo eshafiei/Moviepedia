@@ -29,8 +29,6 @@ export class TitleDetailsComponent implements OnInit {
     if (this.movieInfo && this.movieInfo.results[0] && this.movieInfo.results[0].poster_path) {
       this.moviePosterUrl = environment.imageBaseUrl + this.movieInfo.results[0].poster_path;
       this.getCastPictures(this.movieInfo.results[0].id);
-    } else {
-      this.moviePosterUrl = '../../../../../../assets/images/movie-poster.png';
     }
   }
 
@@ -43,15 +41,17 @@ export class TitleDetailsComponent implements OnInit {
 
     if (castInfoFromApi.length > 0) {
       castInfoFromApi.forEach((person) => {
-        this.moviedbApiService.getPersonInfo(person[0].id)
-        .subscribe((topCastInfo: any) => {
-            this.titleInfo.mainParticipants.topCast.forEach((cast, i) => {
-              if (cast.participant.name.toLowerCase() === topCastInfo.name.toLowerCase()) {
-                this.titleInfo.mainParticipants.topCast[i].pictureUrl =
-                  environment.imageBaseUrl + topCastInfo.profile_path;
-              }
-            });
-        });
+        if (person && person.length > 0) {
+          this.moviedbApiService.getPersonInfo(person[0].id)
+          .subscribe((topCastInfo: any) => {
+              this.titleInfo.mainParticipants.topCast.forEach((cast, i) => {
+                if (cast.participant.name.toLowerCase() === topCastInfo.name.toLowerCase()) {
+                  this.titleInfo.mainParticipants.topCast[i].pictureUrl =
+                    environment.imageBaseUrl + topCastInfo.profile_path;
+                }
+              });
+          });
+        }
       });
     }
   }
